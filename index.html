@@ -37,7 +37,7 @@
       <div class="case-copy">
         <p class="kicker">Windows 桌面应用</p>
         <h3>轻稿</h3>
-        <p class="lede">输入一个标题，生成完整正文并排成可编辑卡片。实机演示约 12 秒生成 9 张卡片。</p>
+        <p class="lede">输入一个标题，生成完整正文并排成可编辑卡片，再按需要切换全自动、半自动或全手动排版。实机演示约 12 秒生成 9 张卡片。</p>
         <ul class="stack" aria-label="技术栈"><li>Electron</li><li>JavaScript / Node.js</li><li>模型 API</li><li>本地文件存储</li></ul>
         <ol class="pipeline" aria-label="数据流"><li>标题输入</li><li>检索写法</li><li>模型生成</li><li>本地排版</li><li>检查与导出</li></ol>
         <details open>
@@ -56,6 +56,24 @@
         </video>
         <figcaption><a href="assets/qinggao-demo-158.mp4">打开实机录屏 ↗</a><span>v1.5.8</span></figcaption>
       </figure>
+      <section class="layout-modes" aria-labelledby="layout-modes-title">
+        <h4 id="layout-modes-title">三种排版模式</h4>
+        <dl class="layout-mode-list">
+          <div>
+            <dt>全自动</dt>
+            <dd>停笔约 1.2 秒后，自动页重新分页。适合边写边看整篇的分页效果。</dd>
+          </div>
+          <div>
+            <dt>半自动 <small>默认</small></dt>
+            <dd>改文稿或样式后先保留分页，点「排成卡片」才重排。适合定稿前集中调整。</dd>
+          </div>
+          <div>
+            <dt>全手动</dt>
+            <dd>把页面转为可独立移动和缩放的文本框与图片，适合精修封面和重点页。</dd>
+          </div>
+        </dl>
+        <p><strong>同一篇稿可以混用。</strong> 正文先自动排，封面改为手动页。重新分页时保留手动页。原文改动与手动页产生冲突时，先暂停自动更新，提示受影响页和页数变化，再由作者决定是否应用。</p>
+      </section>
     </article>
 
     <article class="case" id="voice">
