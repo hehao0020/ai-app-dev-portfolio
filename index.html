@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#121416">
-<meta name="description" content="何圣荣的 AI 应用开发作品集，包含桌面应用、微信小程序、模型输出评测与 Agent 工具编排演示。">
+<meta name="description" content="何圣荣的 AI 应用开发作品集，包含桌面应用、微信小程序、模型输出评测、前端查词工具与 Agent 工具编排演示。">
 <title>何圣荣 · AI 应用开发作品集</title>
 <link rel="stylesheet" href="styles.css">
 <script src="demo.js" defer></script>
@@ -109,6 +109,43 @@
         <p>按完整正常回答判断。是否提及和是否推荐是不同的指标。</p>
       </div>
     </article>
+  </section>
+
+  <section class="wrap section" id="more-projects" aria-labelledby="more-projects-title">
+    <div class="section-head"><h2 id="more-projects-title">更多工程项目</h2><p>两个已交付的项目，分别处理云端权限和浏览器本地检测。</p></div>
+    <div class="more-grid">
+      <article class="more-case" id="mailbox">
+        <div class="more-preview more-preview-phone">
+          <img src="assets/mailbox-write.webp" width="1058" height="2300" alt="毕业季留言墙小程序的留言填写与提交界面" loading="lazy">
+        </div>
+        <div class="more-copy">
+          <p class="kicker">已上线微信小程序 · 累计 2000+ 用户</p>
+          <h3>毕业季留言墙</h3>
+          <p>微信云函数接收留言请求，检查信箱状态和文本，再决定能否写入云数据库。信箱主人决定留言是否公开。</p>
+          <ul class="notes">
+            <li>服务端用微信身份核对信箱归属，公开留言与主人管理入口使用不同的读写规则。</li>
+            <li>提交时先检查关键词和内容安全，广场另有举报入口，管理员可复核并处理。</li>
+          </ul>
+          <ul class="stack" aria-label="技术栈"><li>微信原生小程序</li><li>云函数</li><li>云数据库</li></ul>
+        </div>
+      </article>
+      <article class="more-case" id="word-check">
+        <div class="more-preview">
+          <img src="assets/word-check.webp" width="1148" height="616" alt="小红书查词网站的文案输入、风险分类和词汇高亮界面" loading="lazy">
+        </div>
+        <div class="more-copy">
+          <p class="kicker">已上线网页工具 · 部门内分享使用</p>
+          <h3>小红书查词网站</h3>
+          <p>粘贴文案后在浏览器中匹配词库，定位命中位置、按风险分类。修改建议可逐条采用，并可对照原文复核。</p>
+          <ul class="notes">
+            <li>基础查词不上传文案。词库配置和历史记录可保存在当前浏览器。</li>
+            <li>轻稿左上角「查词」打开这个网站，用户自行粘贴待复核的文案。</li>
+          </ul>
+          <ul class="stack" aria-label="技术栈"><li>浏览器本地检测</li><li>静态 HTML</li><li>GitHub Pages</li></ul>
+          <div class="more-links"><a class="text-link" href="https://hehao0020.github.io/sensitive-check/">在线体验 ↗</a><a class="text-link" href="https://github.com/hehao0020/sensitive-check">GitHub 源码 ↗</a></div>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="wrap section" id="demo" aria-labelledby="demo-title">
