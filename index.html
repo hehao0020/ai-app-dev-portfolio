@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#121416">
+<meta name="description" content="何圣荣的 AI 应用开发作品集，包含桌面应用、微信小程序、模型输出评测与 Agent 工具编排演示。">
+<title>何圣荣 · AI 应用开发作品集</title>
+<link rel="stylesheet" href="styles.css">
+<script src="demo.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="top">
+  <nav class="wrap top-inner" aria-label="站点导航">
+    <a class="identity" href="#main"><b>何</b>何圣荣</a>
+    <div class="nav-links"><a href="#projects">项目案例</a><a href="#demo">在线演示</a><a href="mailto:hehao2024@163.com">联系</a></div>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="title">
+    <div class="hero-copy">
+      <p class="eyebrow">何圣荣 / 开发作品集</p>
+      <h1 id="title">AI 应用开发<span>Agent / 全栈</span></h1>
+      <p class="intro">做过接入大模型的 Windows 桌面工具、可语音录入的微信小程序，也写过批量验证模型输出的 Python 工具。这里记录我怎么接模型、处理失败，并把结果交付给用户。</p>
+      <div class="actions"><a class="button primary" href="#projects">查看工程案例 <span aria-hidden="true">↓</span></a><a class="button" href="#demo">体验工具编排 <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <figure class="hero-shot">
+      <img src="assets/qinggao-158.webp" width="1560" height="1000" alt="轻稿实机界面，左侧为 AI 生成的正文，右侧为排好的图文卡片" fetchpriority="high">
+      <figcaption><span>轻稿 · Windows 实机</span><a href="#qinggao">查看实现 ↗</a></figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap section" id="projects" aria-labelledby="projects-title">
+    <div class="section-head"><h2 id="projects-title">项目案例</h2><p>每个案例都有实现说明和验证记录。</p></div>
+    <article class="case" id="qinggao">
+      <div class="case-copy">
+        <p class="kicker">Windows 桌面应用</p>
+        <h3>轻稿</h3>
+        <p class="lede">输入一个标题，生成完整正文并排成可编辑卡片。实机演示约 12 秒生成 9 张卡片。</p>
+        <ul class="stack" aria-label="技术栈"><li>Electron</li><li>JavaScript / Node.js</li><li>模型 API</li><li>本地文件存储</li></ul>
+        <ol class="pipeline" aria-label="数据流"><li>标题输入</li><li>检索写法</li><li>模型生成</li><li>本地排版</li><li>检查与导出</li></ol>
+        <details open>
+          <summary>实现与关键取舍</summary>
+          <ul class="notes">
+            <li>编辑器通过 preload 的有限接口调用主进程。主进程校验调用来源，负责模型请求、密钥保存和文件写入。</li>
+            <li>生成前检索本地写法档案，模型返回文本后由编辑器解析、分页。查词规则在本机运行，命中明显风险时尝试改写，仍有风险时保留预览。</li>
+            <li>生成期间若文稿或页面发生变化，停止覆盖并保留返回结果。采用后可撤销，导出前可查看溢出和图片加载提示。</li>
+          </ul>
+        </details>
+        <p class="evidence">验证 · 13 项 Node 自动化测试通过。右侧录屏展示真实模型接入和实际生成过程，剪去部分等待。</p>
+      </div>
+      <figure class="case-media">
+        <video controls playsinline preload="none" poster="assets/qinggao-158.webp" aria-label="轻稿从标题生成卡片，再进行发布前检查的无声操作演示">
+          <source src="assets/qinggao-demo-158.mp4" type="video/mp4">
+        </video>
+        <figcaption><a href="assets/qinggao-demo-158.mp4">打开实机录屏 ↗</a><span>v1.5.8</span></figcaption>
+      </figure>
+    </article>
+
+    <article class="case" id="voice">
+      <div class="case-copy">
+        <p class="kicker">已上线微信小程序</p>
+        <h3>张嘴就记</h3>
+        <p class="lede">把一句话拆成待确认的账目、记事、物品或打卡记录，确认后批量保存。</p>
+        <ul class="stack" aria-label="技术栈"><li>微信原生小程序</li><li>微信云开发</li><li>腾讯云 ASR</li><li>本地存储</li></ul>
+        <ol class="pipeline" aria-label="数据流"><li>录音</li><li>语音转文字</li><li>解析与归类</li><li>逐条确认</li><li>批量保存</li></ol>
+        <details open>
+          <summary>实现与关键取舍</summary>
+          <ul class="notes">
+            <li>语音转文字支持微信同声传译插件或云函数。云函数对接腾讯云一句话识别，识别文本再由本地规则归类。基础手填可独立使用。</li>
+            <li>同一句话可能有多类记录。待记清单按条目打开对应编辑表单，切换行之前先保留当前修改。</li>
+            <li>批量写入前逐条校验。部分写入失败时保留失败项，重试只针对尚未保存的内容，避免已成功条目重复入账。</li>
+          </ul>
+        </details>
+        <p class="evidence">验证 · 发布前记录包含 305 项自动化测试、23 个微信模拟器场景。语音云函数测试使用模拟请求。</p>
+      </div>
+      <figure class="case-media">
+        <div class="phones"><img src="assets/voice-today.webp" alt="张嘴就记的今日流水界面" loading="lazy"><img src="assets/voice-capture.webp" alt="张嘴就记的记录输入界面" loading="lazy"></div>
+        <figcaption><span>小程序界面</span><span>记录 / 核对</span></figcaption>
+      </figure>
+    </article>
+
+    <article class="case" id="geo">
+      <div class="case-copy">
+        <p class="kicker">开源模型评测工具</p>
+        <h3>GEO Brand Monitor</h3>
+        <p class="lede">固定一组问题调用 DeepSeek，将品牌字面提及、未提及与请求失败分别写入 CSV。</p>
+        <ul class="stack" aria-label="技术栈"><li>Python</li><li>OpenAI 兼容 SDK</li><li>DeepSeek API</li><li>pandas</li></ul>
+        <ol class="pipeline" aria-label="数据流"><li>固定问题</li><li>独立请求</li><li>校验响应</li><li>判断提及</li><li>CSV 落盘</li></ol>
+        <details open>
+          <summary>实现与关键取舍</summary>
+          <ul class="notes">
+            <li>每个问题使用独立上下文。报告保留模型、请求时间、问题是否预含品牌词和错误类型，方便后续复跑和比较。</li>
+            <li>空回复、超时和未正常结束的回复记为 Error。有效响应再分别标记 Positive 或 Missed，其中 Positive 仅表示出现了字面品牌词。</li>
+            <li>每完成一条就写入临时文件并替换报表。对模型输出做 CSV 公式转义，便于在表格软件中打开。</li>
+          </ul>
+        </details>
+        <p class="evidence">验证 · 项目记录包含 8 项离线测试，使用真实 SDK 和模拟 HTTP 响应。</p>
+        <p><a class="text-link" href="https://github.com/hehao0020/geo-brand-monitor">查看 GitHub 源码与离线测试 ↗</a></p>
+      </div>
+      <div class="case-media geo-panel">
+        <div class="geo-heading">一次批量请求中，三种结果如何入表</div>
+        <dl class="states">
+          <div><dt>Positive</dt><dd>有效回答包含品牌词</dd></div>
+          <div><dt>Missed</dt><dd>有效回答未包含品牌词</dd></div>
+          <div><dt>Error</dt><dd>响应失败，留空判断字段</dd></div>
+        </dl>
+        <p>按完整正常回答判断。是否提及和是否推荐是不同的指标。</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap section" id="demo" aria-labelledby="demo-title">
+    <div class="section-head"><div><p class="kicker">可交互演示</p><h2 id="demo-title">稿件检查 Agent</h2></div><p>在浏览器本地演示工具编排。规则选择工具，确认后才生成下载文件。无需账号或模型密钥。</p></div>
+    <div class="demo">
+      <form id="run-form">
+        <label for="scenario">选择演示场景</label>
+        <select id="scenario" name="scenario">
+          <option value="review">发布前检查</option>
+          <option value="export">检查后导出报告</option>
+          <option value="retry">工具失败后重试</option>
+        </select>
+        <label for="draft">稿件</label>
+        <textarea id="draft" name="draft" required maxlength="800" rows="5">留学生开学清单
+出发前确认入学材料和住处。
+这是全网第一的攻略，百分之百不会踩坑。</textarea>
+        <div class="actions"><button class="button primary" type="submit">运行工具</button><button class="button" id="retry" type="button" hidden>重试失败步骤</button></div>
+      </form>
+      <div class="trace">
+        <div class="trace-head"><h3>执行记录</h3><span class="status" id="status" role="status" tabindex="-1">等待运行</span></div>
+        <ol id="trace-list" class="trace-list"></ol>
+        <p id="empty">运行后可查看工具选择、检查结果和待确认的操作。</p>
+        <div class="approval" id="approval" hidden>
+          <p>确认后下载检查结果 JSON。</p>
+          <div class="actions"><button class="button primary" id="approve" type="button">确认并下载</button><button class="button" id="reject" type="button">取消导出</button></div>
+        </div>
+      </div>
+    </div>
+    <noscript><p>启用 JavaScript 可运行本地工具演示。</p></noscript>
+  </section>
+</main>
+<footer class="wrap footer"><span>何圣荣 · AI 应用开发</span><a href="https://github.com/hehao0020">GitHub ↗</a><a href="mailto:hehao2024@163.com">联系我 ↗</a></footer>
+</body>
+</html>
